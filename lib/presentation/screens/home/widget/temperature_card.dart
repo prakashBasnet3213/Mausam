@@ -54,6 +54,11 @@ class TemperatureCard extends StatelessWidget {
                 decoration: const BoxDecoration(shape: BoxShape.circle),
                 clipBehavior: Clip.antiAlias,
                 child: CachedNetworkImage(
+                  errorWidget: (context, url, error) {
+                    return Container(
+                      color: Colors.red,
+                    );
+                  },
                   fit: BoxFit.cover,
                   imageUrl: "https:${model.icon}",
                 ),
@@ -64,7 +69,7 @@ class TemperatureCard extends StatelessWidget {
           customPoppinsText(
             content: "Weather Status: ${model.text}",
             style: const TextStyle(
-              fontSize: 12,
+              fontSize: 13.4,
               color: Colors.black,
             ),
           ),

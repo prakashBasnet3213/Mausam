@@ -1,5 +1,9 @@
 import 'dart:io';
 
+
+// this class is needed to Unlock SSL certificate while caching the image from the server
+
+
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {

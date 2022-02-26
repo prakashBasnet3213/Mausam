@@ -4,7 +4,11 @@ import 'package:mausam/presentation/screens/home/home_screen.dart';
 import 'package:mausam/presentation/screens/widgets/custom_button.dart';
 
 class HelpScreen extends StatefulWidget {
-  const HelpScreen({Key? key}) : super(key: key);
+  final bool isSplash;
+  const HelpScreen({
+    Key? key,
+    required this.isSplash,
+  }) : super(key: key);
 
   @override
   HelpScreenState createState() => HelpScreenState();
@@ -14,14 +18,16 @@ class HelpScreenState extends State<HelpScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(seconds: 5)).then(
-      (value) => Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-          (route) => false),
-    );
+    if (widget.isSplash) {
+      Future.delayed(const Duration(seconds: 5)).then(
+        (value) => Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(),
+            ),
+            (route) => false),
+      );
+    }
   }
 
   @override
@@ -36,35 +42,33 @@ class HelpScreenState extends State<HelpScreen> {
               image: AssetImage("assets/images/frame.png"),
             ),
           ),
-          padding: const EdgeInsets.all(10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              customPoppinsText(
-                content: "We show weather for you",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black.withOpacity(0.5),
-                  fontWeight: FontWeight.w600,
+              Align(
+                alignment: Alignment.center,
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  child: customPoppinsText(
+                    content: "We show weather for you",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black.withOpacity(0.5),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
-              const SizedBox(height: 10),
-              customPoppinsText(
-                content: "Come on, Let's have it!!",
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Colors.black.withOpacity(0.4),
-                ),
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height * 0.3),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.25),
               CustomButton(
                 onPressed: () {
                   Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
-                      (route) => false);
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomeScreen(),
+                    ),
+                    (route) => false,
+                  );
                 },
                 text: "Skip",
               )

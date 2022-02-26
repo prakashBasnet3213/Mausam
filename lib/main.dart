@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mausam/common/helper/helper.dart';
 import 'package:mausam/presentation/bloc/GetWeather/getweather_cubit.dart';
 import 'package:mausam/presentation/screens/help/help_screen.dart';
-import 'package:mausam/presentation/screens/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'di/injection.dart' as get_it;
 import 'presentation/bloc/ChangeLabel/changelabel_cubit.dart';
@@ -27,6 +26,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
+          lazy: false,
           create: (context) =>
               get_it.sl<GetweatherCubit>()..getWeatherFromLocalStorage(),
         ),
@@ -38,7 +38,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomeScreen(),
+        home: const HelpScreen(
+          isSplash: true,
+        ),
         debugShowCheckedModeBanner: false,
       ),
     );

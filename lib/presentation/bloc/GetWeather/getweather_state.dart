@@ -13,13 +13,13 @@ class GetweatherLoading extends GetweatherState {}
 
 class GetweatherLoaded extends GetweatherState {
   final RefinedWeatherModel model;
-  final String? lastSearched;
+  final String lastSearched;
   const GetweatherLoaded({
     required this.model,
     required this.lastSearched,
   });
   @override
-  List<Object> get props => [model, lastSearched!];
+  List<Object> get props => [model, lastSearched];
 }
 
 class GetweatherFailed extends GetweatherState {
