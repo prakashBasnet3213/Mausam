@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mausam/common/constants/color_constants.dart';
@@ -23,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _searchController;
   late GetweatherCubit _getweatherCubit;
   late ChangelabelCubit _changelabelCubit;
+  Timer? _debounce;
   @override
   void initState() {
     super.initState();
@@ -38,6 +41,18 @@ class _HomeScreenState extends State<HomeScreen> {
         _getweatherCubit.getWeatherFromValues();
       } else {
         _changelabelCubit.changeLabel(true);
+        _onSearchChanged(_searchController.text);
+      }
+    });
+  }
+
+// this method will hold for the 2 seconds and after that it will fire the location
+//this method will only fire the location name if the length of the given location is greater than 1
+  _onSearchChanged(String location) {
+    if (_debounce?.isActive ?? false) _debounce?.cancel();
+    _debounce = Timer(const Duration(seconds: 2), () {
+      if (location.length > 1) {
+        _getweatherCubit.getWeatherFromLocation(location);
       }
     });
   }
@@ -56,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    _debounce?.cancel();
     _searchController.dispose();
     if (!mounted) {
       _getweatherCubit.close();
